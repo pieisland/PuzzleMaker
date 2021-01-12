@@ -111,6 +111,11 @@ const Buttons = () => {
       photoImg.src = reader.result;
       const puzzleGrid = document.getElementById("photoGrid");
       puzzleGrid.classList.add("hidden");
+
+      const puzzleMakeBtnWrapElement = document.querySelector(
+        "#puzzleMakeBtnWrap"
+      );
+      puzzleMakeBtnWrapElement.className = "";
     };
 
     reader.readAsDataURL(file); //파일을 읽는 메서드
