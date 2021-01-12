@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useReducer, useContext } from "react";
 import styled from "styled-components";
 import "../commons/common.css";
-import grid from "../../public/grid.png";
+//import grid from "../../public/grid.png";
+import grid from "../../public/images/grids/3x3.png";
+
 import PuzzlePlate from "../components/PuzzlePlate";
+import FrameSettingButtons from "../components/FrameSettingButtons";
+
+export const PuzzleFrameContext = React.createContext();
 
 const BtnWrap = styled.div`
   display: flex;
@@ -42,7 +47,18 @@ const HiddenInput = styled.input`
   display: none;
 `;
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "frameValue":
+      return { column: action.payload.column, row: action.payload.row };
+    default:
+      return state;
+  }
+}
+
 const Buttons = () => {
+  const [frameValues, dispatch] = useReducer(reducer, { column: 3, row: 3 });
+
   const uploadImg = () => {
     const input = document.querySelector("#input");
     input.click();
@@ -73,10 +89,20 @@ const Buttons = () => {
     const img = document.getElementById("photoImg");
     //console.log(img.width, img.height);
 
+    dispatch({
+      type: "frameValue",
+      payload: { column: 3, row: 3 },
+    });
+
     const puzzleGrid = document.getElementById("photoGrid");
     puzzleGrid.classList.remove("hidden");
     puzzleGrid.style.width = `${img.width}px`;
     puzzleGrid.src = grid;
+
+    const frameSettingBtnWrapElement = document.querySelector(
+      "#frameSettingBtnWrap"
+    );
+    frameSettingBtnWrapElement.className = "";
   };
 
   return (
@@ -93,9 +119,15 @@ const Buttons = () => {
             <div>퍼즐로 변환</div>
           </PuzzleMakeBtn>
         </div>
+
+        <PuzzleFrameContext.Provider value={{ frameValues, dispatch }}>
+          <div id="frameSettingBtnWrap" className="hidden">
+            <FrameSettingButtons></FrameSettingButtons>
+          </div>
+        </PuzzleFrameContext.Provider>
       </BtnWrap>
 
-      <PuzzlePlate></PuzzlePlate>
+      {/* <PuzzlePlate></PuzzlePlate> */}
     </>
   );
 };
