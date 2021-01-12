@@ -89,6 +89,11 @@ const Buttons = () => {
     const img = document.getElementById("photoImg");
     //console.log(img.width, img.height);
 
+    dispatch({
+      type: "frameValue",
+      payload: { column: 3, row: 3 },
+    });
+
     const puzzleGrid = document.getElementById("photoGrid");
     puzzleGrid.classList.remove("hidden");
     puzzleGrid.style.width = `${img.width}px`;
