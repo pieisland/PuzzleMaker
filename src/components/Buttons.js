@@ -1,12 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import "../commons/common.css";
 import grid from "../../public/grid.png";
-import doll from "../../public/doll.jpg";
-
-const PuzzleWrap = styled.div`
-  display: flex;
-`;
+import PuzzlePlate from "../components/PuzzlePlate";
 
 const BtnWrap = styled.div`
   display: flex;
@@ -46,58 +42,10 @@ const HiddenInput = styled.input`
   display: none;
 `;
 
-const PuzzleDiv = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: beige;
-
-  //draggable: true;
-
-  position: relative;
-
-  overflow: hidden;
-`;
-
-const TmpDiv = styled.div`
-  background-image: url(${doll});
-  background-size: 200px;
-  width: 100px;
-  height: 100px;
-
-  background-position-x: ${(props) => props.bpx || "0"};
-  background-position-y: ${(props) => props.bpy || "0"};
-`;
-
 const Buttons = () => {
-  const [draggingPuzzle, setDraggingPuzzle] = useState(null);
   const uploadImg = () => {
     const input = document.querySelector("#input");
     input.click();
-  };
-
-  const dragStart = (e) => {
-    setDraggingPuzzle(e.target);
-
-    setTimeout(() => e.target.classList.add("hidden"), 0);
-  };
-
-  const dragEnd = (e) => {
-    e.target.classList.remove("hidden");
-  };
-
-  const dragOver = (e) => {
-    e.preventDefault();
-    e.target.style.backgroundColor = "blue";
-  };
-
-  const dragLeave = (e) => {
-    e.preventDefault();
-    e.target.style.backgroundColor = "beige";
-  };
-
-  const drop = (e) => {
-    e.target.style.backgroundColor = "beige";
-    e.target.append(draggingPuzzle);
   };
 
   //https://doolyit.tistory.com/182
@@ -147,73 +95,7 @@ const Buttons = () => {
         </div>
       </BtnWrap>
 
-      <PuzzleWrap>
-        <PuzzleDiv
-          id="obj"
-          onDragOver={dragOver}
-          onDrop={drop}
-          onDragLeave={dragLeave}
-        ></PuzzleDiv>
-
-        <PuzzleDiv
-          id="obj"
-          onDragOver={dragOver}
-          onDrop={drop}
-          onDragLeave={dragLeave}
-        ></PuzzleDiv>
-      </PuzzleWrap>
-
-      <PuzzleWrap>
-        <PuzzleDiv
-          id="obj"
-          onDragOver={dragOver}
-          onDrop={drop}
-          onDragLeave={dragLeave}
-        ></PuzzleDiv>
-
-        <PuzzleDiv
-          id="obj"
-          onDragOver={dragOver}
-          onDrop={drop}
-          onDragLeave={dragLeave}
-        ></PuzzleDiv>
-      </PuzzleWrap>
-
-      <PuzzleWrap>
-        <TmpDiv
-          id="tmpImg"
-          draggable="true"
-          onDragStart={dragStart}
-          onDragEnd={dragEnd}
-        ></TmpDiv>
-
-        <TmpDiv
-          id="tmpImg"
-          draggable="true"
-          onDragStart={dragStart}
-          onDragEnd={dragEnd}
-          bpx={"100%"}
-          bpy={"100%"}
-        ></TmpDiv>
-
-        <TmpDiv
-          id="tmpImg"
-          draggable="true"
-          onDragStart={dragStart}
-          onDragEnd={dragEnd}
-          bpx={"100%"}
-          bpy={"0"}
-        ></TmpDiv>
-
-        <TmpDiv
-          id="tmpImg"
-          draggable="true"
-          onDragStart={dragStart}
-          onDragEnd={dragEnd}
-          bpx={"0"}
-          bpy={"100%"}
-        ></TmpDiv>
-      </PuzzleWrap>
+      <PuzzlePlate></PuzzlePlate>
     </>
   );
 };
