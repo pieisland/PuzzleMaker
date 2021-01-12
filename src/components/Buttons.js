@@ -1,7 +1,9 @@
 import React, { useReducer, useContext } from "react";
 import styled from "styled-components";
 import "../commons/common.css";
-import grid from "../../public/grid.png";
+//import grid from "../../public/grid.png";
+import grid from "../../public/images/grids/3x3.png";
+
 import PuzzlePlate from "../components/PuzzlePlate";
 import FrameSettingButtons from "../components/FrameSettingButtons";
 
