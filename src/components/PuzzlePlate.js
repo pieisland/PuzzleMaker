@@ -13,12 +13,6 @@ const WrapDiv = styled.div`
   margin: 10px;
 `;
 
-const PuzzlePieceWrap = styled.div`
-  background-color: navy;
-  width: 1000px;
-  height: 150px;
-`;
-
 const PuzzlePlateDiv = styled.div`
   position: relative;
 
@@ -91,8 +85,6 @@ const PuzzlePlate = ({ randomColIdx, randomRowIdx }) => {
     tmpHtmlStr += `</PuzzleWrap>`;
     htmlStr += tmpHtmlStr;
   }*/
-
-  //
 
   return (
     <>
