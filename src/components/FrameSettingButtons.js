@@ -90,7 +90,6 @@ const RowDownBtn = styled.div`
 `;
 
 const FrameSettingButtons = () => {
-  //const [frameValues, setFrameValues] = useState([3, 3]);
   const { frameValues, dispatch } = useContext(PuzzleFrameContext);
 
   const changeGrid = (col, row) => {
@@ -99,9 +98,8 @@ const FrameSettingButtons = () => {
     const img = document.getElementById("photoImg");
 
     const puzzleGrid = document.getElementById("photoGrid");
-    //puzzleGrid.classList.remove("hidden");
     puzzleGrid.style.width = `${img.width}px`;
-    //puzzleGrid.src = grids.
+
     let src;
     if (col === 3) {
       if (row === 3) src = grid3x3;
@@ -121,8 +119,9 @@ const FrameSettingButtons = () => {
   };
 
   const columnDown = () => {
-    if (frameValues.column <= 3) return;
-    //setFrameValues([frameValues.column - 1, frameValues.row);
+    if (frameValues.column <= 3) {
+      return;
+    }
 
     changeGrid(frameValues.column - 1, frameValues.row);
 
@@ -135,8 +134,8 @@ const FrameSettingButtons = () => {
   const columnUp = () => {
     if (frameValues.column >= 5) {
       return;
-      //   setFrameValues([frameValues[0] + 1, frameValues[1]]);
     }
+
     changeGrid(frameValues.column + 1, frameValues.row);
     dispatch({
       type: "frameValue",
@@ -150,8 +149,8 @@ const FrameSettingButtons = () => {
   const rowDown = () => {
     if (frameValues.row <= 3) {
       return;
-      //   setFrameValues([frameValues[0], frameValues[1] - 1]);
     }
+
     changeGrid(frameValues.column, frameValues.row - 1);
     dispatch({
       type: "frameValue",
@@ -164,7 +163,6 @@ const FrameSettingButtons = () => {
 
   const rowUp = () => {
     if (frameValues.row >= 5) {
-      //   setFrameValues([frameValues[0], frameValues[1] + 1]);
       return;
     }
     changeGrid(frameValues.column, frameValues.row + 1);
