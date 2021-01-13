@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import "../commons/common.css";
 import doll from "../../public/doll.jpg";
+import { PuzzleFrameContext, PuzzleImageContext } from "../components/Buttons";
 
 const PuzzlePlateDiv = styled.div`
-  width: 100px;
-  height: 100px;
+  width: ${(props) => `${props.width}px` || "100px"};
+  height: ${(props) => `${props.height}px` || "100px"};
   background-color: beige;
 
   position: relative;
@@ -14,13 +15,15 @@ const PuzzlePlateDiv = styled.div`
 `;
 
 const PuzzleDiv = styled.div`
-  background-image: url(${doll});
-  background-size: 200px;
-  width: 100px;
-  height: 100px;
+  background-image: ${(props) => `url(${props.src})` || `url(${doll})`};
+  //url(${doll});
+  background-size: ${(props) =>
+    `${props.bwidth}px ${props.bheight}px` || `200px`};
+  width: ${(props) => `${props.width}px` || "100px"};
+  height: ${(props) => `${props.height}px` || "100px"};
 
-  background-position-x: ${(props) => props.bpx || "0"};
-  background-position-y: ${(props) => props.bpy || "0"};
+  background-position-x: ${(props) => `${props.bpx}%` || "0"};
+  background-position-y: ${(props) => `${props.bpy}%` || "0"};
 `;
 
 const PuzzleWrap = styled.div`
@@ -28,6 +31,11 @@ const PuzzleWrap = styled.div`
 `;
 
 const PuzzlePlate = () => {
+  const { frameValues, dispatch } = useContext(PuzzleFrameContext);
+  const { imgInfo, imgDispatch } = useContext(PuzzleImageContext);
+
+  //console.log(frameValues, imgInfo);
+
   const [draggingPuzzle, setDraggingPuzzle] = useState(null);
 
   const dragStart = (e) => {
@@ -55,9 +63,44 @@ const PuzzlePlate = () => {
     e.target.append(draggingPuzzle);
   };
 
+  //let htmlStr = `<div>hi</div>`;
+  /*for (let i = 0; i < 3; i++) {
+    let tmpHtmlStr = `<PuzzleWrap>`;
+    for (let j = 0; j < 4; j++) {
+      tmpHtmlStr += `        <PuzzlePlateDiv
+      key="puzzle"${i * 4 + j}
+      onDragOver={dragOver}
+      onDrop={drop}
+      onDragLeave={dragLeave}
+    ></PuzzlePlateDiv>
+  `;
+    }
+    tmpHtmlStr += `</PuzzleWrap>`;
+    htmlStr += tmpHtmlStr;
+  }*/
+
   return (
     <>
-      <PuzzleWrap>
+      {[...Array(frameValues.column)].map((c, cindex) => {
+        return (
+          <PuzzleWrap key={`puzzleWrap${cindex}`}>
+            {[...Array(frameValues.row)].map((r, rindex) => {
+              return (
+                <PuzzlePlateDiv
+                  key={`puzzlePlate${cindex * frameValues.row + rindex}`}
+                  onDragOver={dragOver}
+                  onDrop={drop}
+                  onDragLeave={dragLeave}
+                  width={imgInfo.width / frameValues.row}
+                  height={imgInfo.height / frameValues.column}
+                ></PuzzlePlateDiv>
+              );
+            })}
+          </PuzzleWrap>
+        );
+      })}
+
+      {/* <PuzzleWrap>
         <PuzzlePlateDiv
           id="obj"
           onDragOver={dragOver}
@@ -72,7 +115,6 @@ const PuzzlePlate = () => {
           onDragLeave={dragLeave}
         ></PuzzlePlateDiv>
       </PuzzleWrap>
-
       <PuzzleWrap>
         <PuzzlePlateDiv
           id="obj"
@@ -87,9 +129,35 @@ const PuzzlePlate = () => {
           onDrop={drop}
           onDragLeave={dragLeave}
         ></PuzzlePlateDiv>
+      </PuzzleWrap> */}
+
+      <PuzzleWrap>
+        {[...Array(frameValues.column)].map((c, cindex) => {
+          return (
+            <>
+              {[...Array(frameValues.row)].map((r, rindex) => {
+                return (
+                  <PuzzleDiv
+                    key={`puzzle${cindex * frameValues.row + rindex}`}
+                    draggable="true"
+                    onDragStart={dragStart}
+                    onDragEnd={dragEnd}
+                    width={imgInfo.width / frameValues.row}
+                    height={imgInfo.height / frameValues.column}
+                    src={imgInfo.src}
+                    bwidth={imgInfo.width}
+                    bheight={imgInfo.height}
+                    bpx={(rindex / (frameValues.row - 1)) * 100}
+                    bpy={(cindex / (frameValues.column - 1)) * 100}
+                  ></PuzzleDiv>
+                );
+              })}
+            </>
+          );
+        })}
       </PuzzleWrap>
 
-      <PuzzleWrap>
+      {/* <PuzzleWrap>
         <PuzzleDiv
           id="tmpImg"
           draggable="true"
@@ -123,7 +191,7 @@ const PuzzlePlate = () => {
           bpx={"0"}
           bpy={"100%"}
         ></PuzzleDiv>
-      </PuzzleWrap>
+      </PuzzleWrap> */}
     </>
   );
 };
