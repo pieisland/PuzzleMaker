@@ -14,12 +14,15 @@ import grid5x5 from "../../public/images/grids/5x5.png";
 
 const FrameSettingBtnWrap = styled.div`
   display: flex;
+
   margin: 10px;
 `;
 
 const ColumnUpBtn = styled.div`
   width: 30px;
   height: 30px;
+  margin-right: 10px;
+
   border-radius: 3px;
   background-color: pink;
 
@@ -27,12 +30,11 @@ const ColumnUpBtn = styled.div`
   line-height: 27px;
 
   cursor: pointer;
-
-  margin-right: 10px;
 `;
 const ColumnDownBtn = styled.div`
   width: 30px;
   height: 30px;
+
   border-radius: 3px;
   background-color: pink;
 
@@ -43,19 +45,20 @@ const ColumnDownBtn = styled.div`
 `;
 
 const ColumnValue = styled.div`
-  font-size: 20px;
   width: 20px;
   height: 30px;
 
   text-align: center;
   line-height: 27px;
+
+  font-size: 20px;
 `;
 
 const RowValue = styled.div`
-  font-size: 20px;
   width: 20px;
   height: 30px;
 
+  font-size: 20px;
   text-align: center;
   line-height: 27px;
 `;
@@ -63,6 +66,7 @@ const RowValue = styled.div`
 const RowUpBtn = styled.div`
   width: 30px;
   height: 30px;
+
   border-radius: 3px;
   background-color: pink;
 
@@ -75,6 +79,7 @@ const RowUpBtn = styled.div`
 const RowDownBtn = styled.div`
   width: 30px;
   height: 30px;
+
   border-radius: 3px;
   background-color: pink;
 
@@ -92,6 +97,7 @@ const FrameSettingButtons = () => {
     console.log(col, row);
 
     const img = document.getElementById("photoImg");
+
     const puzzleGrid = document.getElementById("photoGrid");
     //puzzleGrid.classList.remove("hidden");
     puzzleGrid.style.width = `${img.width}px`;

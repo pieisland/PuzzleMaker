@@ -10,6 +10,13 @@ import FrameSettingButtons from "../components/FrameSettingButtons";
 export const PuzzleFrameContext = React.createContext();
 export const PuzzleImageContext = React.createContext();
 
+// const PuzzleGrid = styled.div`
+//   width: ${(props) => `${props.width}px` || "100px"};
+//   height: ${(props) => `${props.height}px` || "100px"};
+
+//   border: 1px solid black;
+// `;
+
 const BtnWrap = styled.div`
   display: flex;
 `;
@@ -134,10 +141,26 @@ const Buttons = () => {
       payload: { column: 3, row: 3 },
     });
 
+    //grid가 나오는 순간
     const puzzleGrid = document.getElementById("photoGrid");
     puzzleGrid.classList.remove("hidden");
     puzzleGrid.style.width = `${img.width}px`;
     puzzleGrid.src = grid;
+
+    // const photoGrid2 = document.getElementById("photoGrid2");
+    // photoGrid2.style.width = `${img.width}px`;
+    // photoGrid2.innerHTML = `<div>뭐 되긴 하나요</div>`;
+    // let tmpHTML = "";
+    // let gridWidth = img.width / 3;
+    // let gridHeight = img.height / 3;
+    // for (let i = 0; i < 3; i++) {
+    //   tmpHTML += `<div width=${img.width}px height=${gridHeight}px>`;
+    //   for (let j = 0; j < 3; j++) {
+    //     tmpHTML += `<div width=${gridWidth}px height=${gridHeight}px></div>`;
+    //   }
+    //   tmpHTML += `</div>`;
+    // }
+    // photoGrid2.innerHTML = tmpHTML;
 
     const frameSettingBtnWrapElement = document.querySelector(
       "#frameSettingBtnWrap"
@@ -151,7 +174,6 @@ const Buttons = () => {
   };
 
   const confirmPuzzle = () => {
-    //console.log("확정");
     //console.log(imgInfo.width, imgInfo.height);
 
     document.querySelector("#puzzlePlateWrap").className = "";
@@ -160,8 +182,6 @@ const Buttons = () => {
     //조절 버튼
     //퍼즐 변환버튼
     //원래 있던 이미지
-    //console.log(document.querySelector(".confirmHide"));
-    //puzzleGrid.classList.add("hidden");c
     const hideIdList = [
       "imgUploadBtnWrap",
       "puzzleMakeBtnWrap",
@@ -173,10 +193,6 @@ const Buttons = () => {
     hideIdList.forEach((id) => {
       document.getElementById(id).classList.add("hidden");
     });
-
-    //현재 보이는 것들을 좀 숨겨야 할 필요다 있다. 일단은..;
-    //class로 다 묶어서 hidden을 넣어버리는 것도 좋을 것 같다.
-    //크기에 맞게 틀을 만들어 줘야 한다.
   };
 
   return (

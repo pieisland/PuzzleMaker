@@ -5,22 +5,23 @@ import doll from "../../public/doll.jpg";
 import { PuzzleFrameContext, PuzzleImageContext } from "../components/Buttons";
 
 const PuzzlePlateDiv = styled.div`
+  position: relative;
+
   width: ${(props) => `${props.width}px` || "100px"};
   height: ${(props) => `${props.height}px` || "100px"};
-  background-color: beige;
 
-  position: relative;
+  background-color: beige;
 
   overflow: hidden;
 `;
 
 const PuzzleDiv = styled.div`
-  background-image: ${(props) => `url(${props.src})` || `url(${doll})`};
-  //url(${doll});
-  background-size: ${(props) =>
-    `${props.bwidth}px ${props.bheight}px` || `200px`};
   width: ${(props) => `${props.width}px` || "100px"};
   height: ${(props) => `${props.height}px` || "100px"};
+
+  background-image: ${(props) => `url(${props.src})` || `url(${doll})`};
+  background-size: ${(props) =>
+    `${props.bwidth}px ${props.bheight}px` || `200px`};
 
   background-position-x: ${(props) => `${props.bpx}%` || "0"};
   background-position-y: ${(props) => `${props.bpy}%` || "0"};
@@ -33,7 +34,6 @@ const PuzzleWrap = styled.div`
 const PuzzlePlate = () => {
   const { frameValues, dispatch } = useContext(PuzzleFrameContext);
   const { imgInfo, imgDispatch } = useContext(PuzzleImageContext);
-
   //console.log(frameValues, imgInfo);
 
   const [draggingPuzzle, setDraggingPuzzle] = useState(null);
@@ -100,37 +100,6 @@ const PuzzlePlate = () => {
         );
       })}
 
-      {/* <PuzzleWrap>
-        <PuzzlePlateDiv
-          id="obj"
-          onDragOver={dragOver}
-          onDrop={drop}
-          onDragLeave={dragLeave}
-        ></PuzzlePlateDiv>
-
-        <PuzzlePlateDiv
-          id="obj"
-          onDragOver={dragOver}
-          onDrop={drop}
-          onDragLeave={dragLeave}
-        ></PuzzlePlateDiv>
-      </PuzzleWrap>
-      <PuzzleWrap>
-        <PuzzlePlateDiv
-          id="obj"
-          onDragOver={dragOver}
-          onDrop={drop}
-          onDragLeave={dragLeave}
-        ></PuzzlePlateDiv>
-
-        <PuzzlePlateDiv
-          id="obj"
-          onDragOver={dragOver}
-          onDrop={drop}
-          onDragLeave={dragLeave}
-        ></PuzzlePlateDiv>
-      </PuzzleWrap> */}
-
       <PuzzleWrap>
         {[...Array(frameValues.row)].map((r, rindex) => {
           return (
@@ -156,42 +125,6 @@ const PuzzlePlate = () => {
           );
         })}
       </PuzzleWrap>
-
-      {/* <PuzzleWrap>
-        <PuzzleDiv
-          id="tmpImg"
-          draggable="true"
-          onDragStart={dragStart}
-          onDragEnd={dragEnd}
-        ></PuzzleDiv>
-
-        <PuzzleDiv
-          id="tmpImg"
-          draggable="true"
-          onDragStart={dragStart}
-          onDragEnd={dragEnd}
-          bpx={"100%"}
-          bpy={"100%"}
-        ></PuzzleDiv>
-
-        <PuzzleDiv
-          id="tmpImg"
-          draggable="true"
-          onDragStart={dragStart}
-          onDragEnd={dragEnd}
-          bpx={"100%"}
-          bpy={"0"}
-        ></PuzzleDiv>
-
-        <PuzzleDiv
-          id="tmpImg"
-          draggable="true"
-          onDragStart={dragStart}
-          onDragEnd={dragEnd}
-          bpx={"0"}
-          bpy={"100%"}
-        ></PuzzleDiv>
-      </PuzzleWrap> */}
     </>
   );
 };
