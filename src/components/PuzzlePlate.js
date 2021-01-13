@@ -81,18 +81,18 @@ const PuzzlePlate = () => {
 
   return (
     <>
-      {[...Array(frameValues.column)].map((c, cindex) => {
+      {[...Array(frameValues.row)].map((r, rindex) => {
         return (
-          <PuzzleWrap key={`puzzleWrap${cindex}`}>
-            {[...Array(frameValues.row)].map((r, rindex) => {
+          <PuzzleWrap key={`puzzleWrap${rindex}`}>
+            {[...Array(frameValues.column)].map((c, cindex) => {
               return (
                 <PuzzlePlateDiv
-                  key={`puzzlePlate${cindex * frameValues.row + rindex}`}
+                  key={`puzzlePlate${rindex * frameValues.column + cindex}`}
                   onDragOver={dragOver}
                   onDrop={drop}
                   onDragLeave={dragLeave}
-                  width={imgInfo.width / frameValues.row}
-                  height={imgInfo.height / frameValues.column}
+                  width={imgInfo.width / frameValues.column}
+                  height={imgInfo.height / frameValues.row}
                 ></PuzzlePlateDiv>
               );
             })}
@@ -132,23 +132,23 @@ const PuzzlePlate = () => {
       </PuzzleWrap> */}
 
       <PuzzleWrap>
-        {[...Array(frameValues.column)].map((c, cindex) => {
+        {[...Array(frameValues.row)].map((r, rindex) => {
           return (
             <>
-              {[...Array(frameValues.row)].map((r, rindex) => {
+              {[...Array(frameValues.column)].map((c, cindex) => {
                 return (
                   <PuzzleDiv
                     key={`puzzle${cindex * frameValues.row + rindex}`}
                     draggable="true"
                     onDragStart={dragStart}
                     onDragEnd={dragEnd}
-                    width={imgInfo.width / frameValues.row}
-                    height={imgInfo.height / frameValues.column}
+                    width={imgInfo.width / frameValues.column}
+                    height={imgInfo.height / frameValues.row}
                     src={imgInfo.src}
                     bwidth={imgInfo.width}
                     bheight={imgInfo.height}
-                    bpx={(rindex / (frameValues.row - 1)) * 100}
-                    bpy={(cindex / (frameValues.column - 1)) * 100}
+                    bpx={(cindex / (frameValues.column - 1)) * 100}
+                    bpy={(rindex / (frameValues.row - 1)) * 100}
                   ></PuzzleDiv>
                 );
               })}

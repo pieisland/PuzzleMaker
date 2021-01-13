@@ -99,15 +99,15 @@ const FrameSettingButtons = () => {
     let src;
     if (col === 3) {
       if (row === 3) src = grid3x3;
-      if (row === 4) src = grid3x4;
-      if (row === 5) src = grid3x5;
+      if (row === 4) src = grid4x3;
+      if (row === 5) src = grid5x3;
     } else if (col === 4) {
-      if (row === 3) src = grid4x3;
+      if (row === 3) src = grid3x4;
       if (row === 4) src = grid4x4;
-      if (row === 5) src = grid4x5;
+      if (row === 5) src = grid5x4;
     } else if (col === 5) {
-      if (row === 3) src = grid5x3;
-      if (row === 4) src = grid5x4;
+      if (row === 3) src = grid3x5;
+      if (row === 4) src = grid4x5;
       if (row === 5) src = grid5x5;
     }
 
@@ -174,11 +174,11 @@ const FrameSettingButtons = () => {
   return (
     <>
       <FrameSettingBtnWrap>
-        column:
+        Column:
         <ColumnDownBtn onClick={columnDown}>-</ColumnDownBtn>
         <ColumnValue>{frameValues.column}</ColumnValue>
         <ColumnUpBtn onClick={columnUp}>+</ColumnUpBtn>
-        row:
+        Row:
         <RowDownBtn onClick={rowDown}>-</RowDownBtn>
         <RowValue>{frameValues.row}</RowValue>
         <RowUpBtn onClick={rowUp}>+</RowUpBtn>
