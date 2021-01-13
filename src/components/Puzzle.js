@@ -4,11 +4,11 @@ import "../commons/common.css";
 import doll from "../../public/doll.jpg";
 
 const PuzzleDiv = styled.div`
-  background-image: url(${doll});
-  background-size: 200px;
   width: 100px;
   height: 100px;
 
+  background-image: url(${doll});
+  background-size: 200px;
   background-position-x: ${(props) => props.bpx || "0"};
   background-position-y: ${(props) => props.bpy || "0"};
 `;

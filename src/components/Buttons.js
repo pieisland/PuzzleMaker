@@ -8,6 +8,14 @@ import PuzzlePlate from "../components/PuzzlePlate";
 import FrameSettingButtons from "../components/FrameSettingButtons";
 
 export const PuzzleFrameContext = React.createContext();
+export const PuzzleImageContext = React.createContext();
+
+// const PuzzleGrid = styled.div`
+//   width: ${(props) => `${props.width}px` || "100px"};
+//   height: ${(props) => `${props.height}px` || "100px"};
+
+//   border: 1px solid black;
+// `;
 
 const BtnWrap = styled.div`
   display: flex;
@@ -43,6 +51,21 @@ const PuzzleMakeBtn = styled.div`
   cursor: pointer;
 `;
 
+const ConfirmPuzzleSettingBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 10px;
+  width: 100px;
+  height: 30px;
+
+  background-color: salmon;
+  color: white;
+
+  cursor: pointer;
+`;
+
 const HiddenInput = styled.input`
   display: none;
 `;
@@ -56,8 +79,26 @@ function reducer(state, action) {
   }
 }
 
+function imgReducer(state, action) {
+  switch (action.type) {
+    case "imgInfo":
+      return {
+        width: action.payload.width,
+        height: action.payload.height,
+        src: action.payload.src,
+      };
+    default:
+      return state;
+  }
+}
+
 const Buttons = () => {
   const [frameValues, dispatch] = useReducer(reducer, { column: 3, row: 3 });
+  const [imgInfo, imgDispatch] = useReducer(imgReducer, {
+    width: 0,
+    height: 0,
+    src: null,
+  });
 
   const uploadImg = () => {
     const input = document.querySelector("#input");
@@ -89,20 +130,69 @@ const Buttons = () => {
     const img = document.getElementById("photoImg");
     //console.log(img.width, img.height);
 
+    //여기서만 해도 되는지는 좀 의문이긴 해요.
+    imgDispatch({
+      type: "imgInfo",
+      payload: { width: img.width, height: img.height, src: img.src },
+    });
+
     dispatch({
       type: "frameValue",
       payload: { column: 3, row: 3 },
     });
 
+    //grid가 나오는 순간
     const puzzleGrid = document.getElementById("photoGrid");
     puzzleGrid.classList.remove("hidden");
     puzzleGrid.style.width = `${img.width}px`;
     puzzleGrid.src = grid;
 
+    // const photoGrid2 = document.getElementById("photoGrid2");
+    // photoGrid2.style.width = `${img.width}px`;
+    // photoGrid2.innerHTML = `<div>뭐 되긴 하나요</div>`;
+    // let tmpHTML = "";
+    // let gridWidth = img.width / 3;
+    // let gridHeight = img.height / 3;
+    // for (let i = 0; i < 3; i++) {
+    //   tmpHTML += `<div width=${img.width}px height=${gridHeight}px>`;
+    //   for (let j = 0; j < 3; j++) {
+    //     tmpHTML += `<div width=${gridWidth}px height=${gridHeight}px></div>`;
+    //   }
+    //   tmpHTML += `</div>`;
+    // }
+    // photoGrid2.innerHTML = tmpHTML;
+
     const frameSettingBtnWrapElement = document.querySelector(
       "#frameSettingBtnWrap"
     );
     frameSettingBtnWrapElement.className = "";
+
+    const frameSettingConfirmBtnWrapElement = document.querySelector(
+      "#frameSettingConfirmBtnWrap"
+    );
+    frameSettingConfirmBtnWrapElement.className = "";
+  };
+
+  const confirmPuzzle = () => {
+    //console.log(imgInfo.width, imgInfo.height);
+
+    document.querySelector("#puzzlePlateWrap").className = "";
+
+    //확정버튼
+    //조절 버튼
+    //퍼즐 변환버튼
+    //원래 있던 이미지
+    const hideIdList = [
+      "imgUploadBtnWrap",
+      "puzzleMakeBtnWrap",
+      "frameSettingBtnWrap",
+      "frameSettingConfirmBtnWrap",
+      "photoWrap",
+    ];
+
+    hideIdList.forEach((id) => {
+      document.getElementById(id).classList.add("hidden");
+    });
   };
 
   return (
@@ -110,9 +200,11 @@ const Buttons = () => {
       <HiddenInput id="input" type="file" onChange={getFile} accept="img/*" />
 
       <BtnWrap>
-        <ImgUploadBtn onClick={uploadImg}>
-          <div>사진 업로드</div>
-        </ImgUploadBtn>
+        <div id="imgUploadBtnWrap">
+          <ImgUploadBtn onClick={uploadImg}>
+            <div>사진 업로드</div>
+          </ImgUploadBtn>
+        </div>
 
         <div id="puzzleMakeBtnWrap" className="hidden">
           <PuzzleMakeBtn onClick={makePuzzle} id="puzzleBtn">
@@ -125,9 +217,21 @@ const Buttons = () => {
             <FrameSettingButtons></FrameSettingButtons>
           </div>
         </PuzzleFrameContext.Provider>
+
+        <div id="frameSettingConfirmBtnWrap" className="hidden">
+          <ConfirmPuzzleSettingBtn onClick={confirmPuzzle}>
+            <div>프레임 확정</div>
+          </ConfirmPuzzleSettingBtn>
+        </div>
       </BtnWrap>
 
-      {/* <PuzzlePlate></PuzzlePlate> */}
+      <PuzzleFrameContext.Provider value={{ frameValues, dispatch }}>
+        <PuzzleImageContext.Provider value={{ imgInfo, imgDispatch }}>
+          <div id="puzzlePlateWrap" className="hidden">
+            <PuzzlePlate></PuzzlePlate>
+          </div>
+        </PuzzleImageContext.Provider>
+      </PuzzleFrameContext.Provider>
     </>
   );
 };

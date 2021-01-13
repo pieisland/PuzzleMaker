@@ -14,12 +14,15 @@ import grid5x5 from "../../public/images/grids/5x5.png";
 
 const FrameSettingBtnWrap = styled.div`
   display: flex;
+
   margin: 10px;
 `;
 
 const ColumnUpBtn = styled.div`
   width: 30px;
   height: 30px;
+  margin-right: 10px;
+
   border-radius: 3px;
   background-color: pink;
 
@@ -27,12 +30,11 @@ const ColumnUpBtn = styled.div`
   line-height: 27px;
 
   cursor: pointer;
-
-  margin-right: 10px;
 `;
 const ColumnDownBtn = styled.div`
   width: 30px;
   height: 30px;
+
   border-radius: 3px;
   background-color: pink;
 
@@ -43,19 +45,20 @@ const ColumnDownBtn = styled.div`
 `;
 
 const ColumnValue = styled.div`
-  font-size: 20px;
   width: 20px;
   height: 30px;
 
   text-align: center;
   line-height: 27px;
+
+  font-size: 20px;
 `;
 
 const RowValue = styled.div`
-  font-size: 20px;
   width: 20px;
   height: 30px;
 
+  font-size: 20px;
   text-align: center;
   line-height: 27px;
 `;
@@ -63,6 +66,7 @@ const RowValue = styled.div`
 const RowUpBtn = styled.div`
   width: 30px;
   height: 30px;
+
   border-radius: 3px;
   background-color: pink;
 
@@ -75,6 +79,7 @@ const RowUpBtn = styled.div`
 const RowDownBtn = styled.div`
   width: 30px;
   height: 30px;
+
   border-radius: 3px;
   background-color: pink;
 
@@ -92,6 +97,7 @@ const FrameSettingButtons = () => {
     console.log(col, row);
 
     const img = document.getElementById("photoImg");
+
     const puzzleGrid = document.getElementById("photoGrid");
     //puzzleGrid.classList.remove("hidden");
     puzzleGrid.style.width = `${img.width}px`;
@@ -99,15 +105,15 @@ const FrameSettingButtons = () => {
     let src;
     if (col === 3) {
       if (row === 3) src = grid3x3;
-      if (row === 4) src = grid3x4;
-      if (row === 5) src = grid3x5;
+      if (row === 4) src = grid4x3;
+      if (row === 5) src = grid5x3;
     } else if (col === 4) {
-      if (row === 3) src = grid4x3;
+      if (row === 3) src = grid3x4;
       if (row === 4) src = grid4x4;
-      if (row === 5) src = grid4x5;
+      if (row === 5) src = grid5x4;
     } else if (col === 5) {
-      if (row === 3) src = grid5x3;
-      if (row === 4) src = grid5x4;
+      if (row === 3) src = grid3x5;
+      if (row === 4) src = grid4x5;
       if (row === 5) src = grid5x5;
     }
 
@@ -174,11 +180,11 @@ const FrameSettingButtons = () => {
   return (
     <>
       <FrameSettingBtnWrap>
-        column:
+        Column:
         <ColumnDownBtn onClick={columnDown}>-</ColumnDownBtn>
         <ColumnValue>{frameValues.column}</ColumnValue>
         <ColumnUpBtn onClick={columnUp}>+</ColumnUpBtn>
-        row:
+        Row:
         <RowDownBtn onClick={rowDown}>-</RowDownBtn>
         <RowValue>{frameValues.row}</RowValue>
         <RowUpBtn onClick={rowUp}>+</RowUpBtn>
