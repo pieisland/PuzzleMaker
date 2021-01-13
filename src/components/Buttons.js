@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from "react";
+import React, { useState, useReducer, useContext } from "react";
 import styled from "styled-components";
 import "../commons/common.css";
 //import grid from "../../public/grid.png";
@@ -100,6 +100,9 @@ const Buttons = () => {
     src: null,
   });
 
+  const [randomColIdx, setColIdx] = useState([]);
+  const [randomRowIdx, setRowIdx] = useState([]);
+
   const uploadImg = () => {
     const input = document.querySelector("#input");
     input.click();
@@ -126,11 +129,25 @@ const Buttons = () => {
     reader.readAsDataURL(file); //파일을 읽는 메서드
   };
 
+  //인터넷에서 찾음.
+  const selectIndex = (number) => {
+    let randomIndexArray = [];
+    let i = 0;
+    for (i = 0; i < number; i++) {
+      let randomNum = Math.floor(Math.random() * number);
+      if (randomIndexArray.indexOf(randomNum) === -1) {
+        randomIndexArray.push(randomNum);
+      } else {
+        i--;
+      }
+    }
+    return randomIndexArray;
+  };
+
   const makePuzzle = () => {
     const img = document.getElementById("photoImg");
     //console.log(img.width, img.height);
 
-    //여기서만 해도 되는지는 좀 의문이긴 해요.
     imgDispatch({
       type: "imgInfo",
       payload: { width: img.width, height: img.height, src: img.src },
@@ -174,14 +191,8 @@ const Buttons = () => {
   };
 
   const confirmPuzzle = () => {
-    //console.log(imgInfo.width, imgInfo.height);
-
     document.querySelector("#puzzlePlateWrap").className = "";
 
-    //확정버튼
-    //조절 버튼
-    //퍼즐 변환버튼
-    //원래 있던 이미지
     const hideIdList = [
       "imgUploadBtnWrap",
       "puzzleMakeBtnWrap",
@@ -193,6 +204,9 @@ const Buttons = () => {
     hideIdList.forEach((id) => {
       document.getElementById(id).classList.add("hidden");
     });
+
+    setColIdx(selectIndex(frameValues.column));
+    setRowIdx(selectIndex(frameValues.row));
   };
 
   return (
@@ -228,7 +242,10 @@ const Buttons = () => {
       <PuzzleFrameContext.Provider value={{ frameValues, dispatch }}>
         <PuzzleImageContext.Provider value={{ imgInfo, imgDispatch }}>
           <div id="puzzlePlateWrap" className="hidden">
-            <PuzzlePlate></PuzzlePlate>
+            <PuzzlePlate
+              randomColIdx={randomColIdx}
+              randomRowIdx={randomRowIdx}
+            ></PuzzlePlate>
           </div>
         </PuzzleImageContext.Provider>
       </PuzzleFrameContext.Provider>
