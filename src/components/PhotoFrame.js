@@ -21,10 +21,12 @@ const PhotoGrid = styled.img`
 const PhotoFrame = () => {
   return (
     <>
-      <PhotoWrapper id="photoWrapper">
-        <PhotoImg id="photoImg"></PhotoImg>
-        <PhotoGrid id="photoGrid"></PhotoGrid>
-      </PhotoWrapper>
+      <div id="photoWrap">
+        <PhotoWrapper id="photoWrapper">
+          <PhotoImg id="photoImg"></PhotoImg>
+          <PhotoGrid id="photoGrid"></PhotoGrid>
+        </PhotoWrapper>
+      </div>
     </>
   );
 };
