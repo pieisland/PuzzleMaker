@@ -100,8 +100,7 @@ const Buttons = () => {
     src: null,
   });
 
-  const [randomColIdx, setColIdx] = useState([]);
-  const [randomRowIdx, setRowIdx] = useState([]);
+  const [randomIdx, setRandomIdx] = useState([]);
 
   const uploadImg = () => {
     const input = document.querySelector("#input");
@@ -129,19 +128,25 @@ const Buttons = () => {
     reader.readAsDataURL(file); //파일을 읽는 메서드
   };
 
-  //인터넷에서 찾음.
-  const selectIndex = (number) => {
-    let randomIndexArray = [];
-    let i = 0;
-    for (i = 0; i < number; i++) {
-      let randomNum = Math.floor(Math.random() * number);
-      if (randomIndexArray.indexOf(randomNum) === -1) {
-        randomIndexArray.push(randomNum);
-      } else {
-        i--;
+  const makePuzzleRandomly = (col, row) => {
+    let randomIndexArr = [];
+    for (let i = 0; i < col; i++) {
+      for (let j = 0; j < row; j++) {
+        randomIndexArr.push([i, j]);
       }
     }
-    return randomIndexArray;
+
+    let tryCnt = col * row;
+    while (tryCnt > 0) {
+      let randomIdx = Math.floor(Math.random() * col * row);
+      let tmpVal = randomIndexArr[randomIdx];
+      randomIndexArr.splice(randomIdx, 1);
+
+      randomIndexArr.push(tmpVal);
+      tryCnt--;
+    }
+
+    return randomIndexArr;
   };
 
   const makePuzzle = () => {
@@ -205,8 +210,7 @@ const Buttons = () => {
       document.getElementById(id).classList.add("hidden");
     });
 
-    setColIdx(selectIndex(frameValues.column));
-    setRowIdx(selectIndex(frameValues.row));
+    setRandomIdx(makePuzzleRandomly(frameValues.column, frameValues.row));
   };
 
   return (
@@ -242,10 +246,7 @@ const Buttons = () => {
       <PuzzleFrameContext.Provider value={{ frameValues, dispatch }}>
         <PuzzleImageContext.Provider value={{ imgInfo, imgDispatch }}>
           <div id="puzzlePlateWrap" className="hidden">
-            <PuzzlePlate
-              randomColIdx={randomColIdx}
-              randomRowIdx={randomRowIdx}
-            ></PuzzlePlate>
+            <PuzzlePlate randomIdx={randomIdx}></PuzzlePlate>
           </div>
         </PuzzleImageContext.Provider>
       </PuzzleFrameContext.Provider>
