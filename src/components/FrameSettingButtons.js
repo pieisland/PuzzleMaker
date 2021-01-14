@@ -93,7 +93,7 @@ const FrameSettingButtons = () => {
   const { frameValues, dispatch } = useContext(PuzzleFrameContext);
 
   const changeGrid = (col, row) => {
-    console.log(col, row);
+    //console.log(col, row);
 
     const img = document.getElementById("photoImg");
 
