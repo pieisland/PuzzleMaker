@@ -1,3 +1,13 @@
 .hidden {
   display: none;
 }
+
+.gridRow {
+  position: relative;
+  display: flex;
+}
+
+.gridCol {
+  position: relative;
+  border: 1px solid black;
+}
