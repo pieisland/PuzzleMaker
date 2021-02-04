@@ -5,7 +5,9 @@ import "../commons/common.css";
 import grid from "../../public/images/grids/3x3.png";
 
 import PuzzlePlate from "../components/PuzzlePlate";
-import FrameSettingButtons from "../components/FrameSettingButtons";
+import FrameSettingButtons, {
+  changeGrid,
+} from "../components/FrameSettingButtons";
 
 export const PuzzleFrameContext = React.createContext();
 export const PuzzleImageContext = React.createContext();
@@ -167,7 +169,8 @@ const Buttons = () => {
     const puzzleGrid = document.getElementById("photoGrid");
     puzzleGrid.classList.remove("hidden");
     puzzleGrid.style.width = `${img.width}px`;
-    puzzleGrid.src = grid;
+    //puzzleGrid.src = grid;
+    changeGrid(3, 3);
 
     // const photoGrid2 = document.getElementById("photoGrid2");
     // photoGrid2.style.width = `${img.width}px`;
