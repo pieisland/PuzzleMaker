@@ -11,7 +11,7 @@ const PhotoImg = styled.img`
   height: 400px;
 `;
 
-const PhotoGrid = styled.img`
+const PhotoGrid = styled.div`
   position: absolute;
 
   height: 400px;

@@ -89,37 +89,62 @@ const RowDownBtn = styled.div`
   cursor: pointer;
 `;
 
+export const changeGrid = (col, row) => {
+  //console.log(col, row);
+
+  const img = document.getElementById("photoImg");
+
+  const puzzleGrid = document.getElementById("photoGrid");
+  puzzleGrid.style.width = `${img.width}px`;
+
+  puzzleGrid.innerHTML = "";
+
+  const rect = puzzleGrid.getBoundingClientRect();
+  const width = rect.width;
+  const height = rect.height;
+
+  let divWidth = width / col;
+  let divHeight = height / row;
+
+  for (let i = 0; i < row; i++) {
+    let newRow = document.createElement("div");
+    newRow.classList.add("gridRow");
+    newRow.style.width = "100%";
+    newRow.style.height = `${(divHeight / height) * 100}%`;
+
+    for (let j = 0; j < col; j++) {
+      let newCol = document.createElement("div");
+      newCol.classList.add("gridCol");
+      newCol.style.width = `${(divWidth / width) * 100}%`;
+      newCol.style.height = "100%";
+      newRow.appendChild(newCol);
+    }
+    puzzleGrid.appendChild(newRow);
+  }
+
+  /*let src;
+  if (col === 3) {
+    if (row === 3) src = grid3x3;
+    if (row === 4) src = grid4x3;
+    if (row === 5) src = grid5x3;
+  } else if (col === 4) {
+    if (row === 3) src = grid3x4;
+    if (row === 4) src = grid4x4;
+    if (row === 5) src = grid5x4;
+  } else if (col === 5) {
+    if (row === 3) src = grid3x5;
+    if (row === 4) src = grid4x5;
+    if (row === 5) src = grid5x5;
+  }
+
+  puzzleGrid.src = src;*/
+};
+
 const FrameSettingButtons = () => {
   const { frameValues, dispatch } = useContext(PuzzleFrameContext);
 
-  const changeGrid = (col, row) => {
-    //console.log(col, row);
-
-    const img = document.getElementById("photoImg");
-
-    const puzzleGrid = document.getElementById("photoGrid");
-    puzzleGrid.style.width = `${img.width}px`;
-
-    let src;
-    if (col === 3) {
-      if (row === 3) src = grid3x3;
-      if (row === 4) src = grid4x3;
-      if (row === 5) src = grid5x3;
-    } else if (col === 4) {
-      if (row === 3) src = grid3x4;
-      if (row === 4) src = grid4x4;
-      if (row === 5) src = grid5x4;
-    } else if (col === 5) {
-      if (row === 3) src = grid3x5;
-      if (row === 4) src = grid4x5;
-      if (row === 5) src = grid5x5;
-    }
-
-    puzzleGrid.src = src;
-  };
-
   const columnDown = () => {
-    if (frameValues.column <= 3) {
+    if (frameValues.column <= 2) {
       return;
     }
 
@@ -147,7 +172,7 @@ const FrameSettingButtons = () => {
   };
 
   const rowDown = () => {
-    if (frameValues.row <= 3) {
+    if (frameValues.row <= 2) {
       return;
     }
 
